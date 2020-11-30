@@ -11,7 +11,7 @@ jobs:
 
       - name: Build, Push and Deploy to Heroku
         id: heroku
-        uses: jctaveras/heroku-deploy@v2.0.3
+        uses: jctaveras/heroku-deploy@v2.1.1
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
           api_key: ${{ secrets.HEROKU_API_KEY }}
