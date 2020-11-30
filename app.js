@@ -7,9 +7,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-// Get ENV
-const mongoUri = `mongodb://${process.env.MONGO_URI}:${process.env.MONGO_PORT}`;
-
 // Add features ---------------------------------------------
 const app = express();
 app.use(bodyParser.json());
@@ -19,11 +16,13 @@ app.use(
     extended: true,
   })
 );
-app.use(express.static("public"));
 
 // Database -------------------------------------------------
 const connectDb = () => {
-  mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+  mongoose.connect(process.env.MONGO_LOCATION, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 };
 connectDb();
 
