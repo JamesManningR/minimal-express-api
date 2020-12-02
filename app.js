@@ -17,24 +17,6 @@ app.use(
   })
 );
 
-// Database -------------------------------------------------
-const connectDb = () => {
-  mongoose.connect(process.env.MONGO_LOCATION, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-};
-connectDb();
-
-// Handle the database connection and retry as needed
-const db = mongoose.connection;
-db.on("error", (err) => {
-  console.log("There was a problem connecting to mongo: ", err);
-  console.log("Retrying");
-  setTimeout(() => connectDb(), 5000);
-});
-db.once("open", () => console.log("Successfully connected to mongo"));
-
 // Import Routes
 const routes = require("./routes");
 app.use(routes);
