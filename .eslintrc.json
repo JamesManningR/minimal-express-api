@@ -4,9 +4,6 @@
         "eslint:recommended",
         "plugin:node/recommended"
     ],
-    "globals": {
-        "__basedir": true
-    },
     "plugins": [
         "prettier"
     ],

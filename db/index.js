@@ -1,5 +1,4 @@
-const ArrayTable = require("./ArrayTable");
-
-const posts = new ArrayTable("db/data/data.json");
+const ObjectBased = require("./models/ObjectBased");
+const posts = new ObjectBased("db/data/posts.json");
 
 module.exports = { posts }

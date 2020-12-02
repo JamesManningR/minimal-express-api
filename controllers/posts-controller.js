@@ -25,7 +25,6 @@ const getPosts = async (req, res, next) => {
     const error = new HttpError("Unable to gather projects", 500);
     return next(error);
   }
-  console.log(foundPosts);
   if (!foundPosts) {
     const error = new HttpError("Nothing found", 404);
     return next(error);

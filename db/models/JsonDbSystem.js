@@ -1,11 +1,7 @@
 /* eslint-disable node/prefer-promises/fs */
 const fs = require("fs").promises;
 
-class ArrayTable {
-  constructor(filePath) {
-    this.filePath = filePath;
-  }
-
+class JsonDbSystem {
   async getAllRecords() {
     return fs
       .readFile(this.filePath, "utf8")
@@ -32,8 +28,8 @@ class ArrayTable {
     return fs
       .readFile(this.filePath, "utf8")
       .then((data) => {
-        const allRecords = JSON.parse(data);
-        let writeData = readData.push(allRecords);
+        const readData = JSON.parse(data);
+        let writeData = readData.push(readData);
 
         fs.writeFile(JSON.stringify(writeData, null, 2), this.filePath)
           .then(() => {
@@ -87,4 +83,4 @@ class ArrayTable {
   }
 }
 
-module.exports = ArrayTable;
+module.exports = JsonDbSystem;
