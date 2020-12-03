@@ -41,7 +41,10 @@ class ObjectBasedTable extends JsonDbSystem {
       .readFile(this.filePath, "utf-8")
       .then((data) => {
         let parsedData = JSON.parse(data);
-        parsedData[id] = updatedRecord;
+
+        Object.assign(parsedData[id], updatedRecord);
+        parsedData[id].dateUpdated = new Date();
+
         return fs
           .writeFile(this.filePath, JSON.stringify(parsedData))
           .catch((err) => {

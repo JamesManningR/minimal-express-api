@@ -28,6 +28,11 @@ class JsonDbSystem {
     return fs
       .readFile(this.filePath, "utf8")
       .then((data) => {
+        const now = new Date();
+
+        newRecord.dateCreated = now;
+        newRecord.dateUpdated = now;
+
         const readData = JSON.parse(data);
         let writeData = readData.push(readData);
 
@@ -48,9 +53,13 @@ class JsonDbSystem {
     return fs
       .readFile(this.filePath, "ut8")
       .then((data) => {
-        data[id] = updatedRecord;
+        let parsedData = JSON.parse(data);
+
+        Object.assign(parsedData[id], updatedRecord);
+        parsedData[id].dateUpdated = new Date();
+
         return fs
-          .writeFile(JSON.stringify(data), this.filePath)
+          .writeFile(JSON.stringify(parsedData), this.filePath)
           .catch((err) => {
             throw err;
           })
