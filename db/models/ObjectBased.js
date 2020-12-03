@@ -23,12 +23,32 @@ class ObjectBasedTable extends JsonDbSystem {
 
         records[id] = newRecord;
 
-        fs.writeFile(JSON.stringify(records, null, 2), this.filePath)
+        fs.writeFile(this.filePath, JSON.stringify(records))
           .then(() => {
             return newRecord;
           })
           .catch((err) => {
             throw err;
+          });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  async updateRecord(id, updatedRecord) {
+    return fs
+      .readFile(this.filePath, "utf-8")
+      .then((data) => {
+        let parsedData = JSON.parse(data);
+        parsedData[id] = updatedRecord;
+        return fs
+          .writeFile(this.filePath, JSON.stringify(parsedData))
+          .catch((err) => {
+            throw err;
+          })
+          .then(() => {
+            return updatedRecord;
           });
       })
       .catch((err) => {

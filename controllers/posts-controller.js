@@ -22,14 +22,14 @@ const getPosts = async (req, res, next) => {
   try {
     foundPosts = await posts.getAllRecords();
   } catch (err) {
-    const error = new HttpError("Unable to gather projects", 500);
+    const error = new HttpError("Unable to gather posts", 500);
     return next(error);
   }
   if (!foundPosts) {
     const error = new HttpError("Nothing found", 404);
     return next(error);
   }
-  res.json(foundPosts);
+  res.send(foundPosts);
 };
 
 const createPost = async (req, res, next) => {
@@ -40,29 +40,31 @@ const createPost = async (req, res, next) => {
   try {
     createdPost = await posts.addRecord(newPost);
   } catch (err) {
-    console.log(err);
     const error = new HttpError("Could not create project", 500);
     return next(error);
   }
-  res.status(201).json(createdPost);
+  res.status(201).send(createdPost);
 };
 
 const updatePost = async (req, res, next) => {
-  const { id, postData } = req.body;
+  const id = req.params.id;
+  const { title, body } = req.body;
+  const postData = { title, body };
 
   let updatedPost;
 
   try {
     updatedPost = await posts.updateRecord(id, postData);
   } catch (err) {
+    console.log(err);
     const error = new HttpError("Unable to update project", 500);
     return next(error);
   }
-  res.json(updatedPost);
+  res.send(updatedPost);
 };
 
 const deletePost = async (req, res, next) => {
-  const { id } = req.body
+  const id = req.params.id;
 
   let deletedPost;
 
@@ -72,7 +74,7 @@ const deletePost = async (req, res, next) => {
     const error = new HttpError("Unable to delete project", 500);
     return next(error);
   }
-  res.json(deletedPost);
+  res.send(deletedPost);
 };
 
 module.exports = {

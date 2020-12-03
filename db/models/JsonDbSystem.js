@@ -6,8 +6,7 @@ class JsonDbSystem {
     return fs
       .readFile(this.filePath, "utf8")
       .then((data) => {
-        const allRecords = JSON.parse(data);
-        return allRecords;
+        return JSON.parse(data);
       })
       .catch((err) => {
         throw err;
@@ -19,7 +18,8 @@ class JsonDbSystem {
       .readFile(this.filePath, "utf8")
       .then((data) => {
         return JSON.parse(data)[id];
-      }).catch((err) => {
+      })
+      .catch((err) => {
         throw err;
       });
   }
@@ -31,7 +31,7 @@ class JsonDbSystem {
         const readData = JSON.parse(data);
         let writeData = readData.push(readData);
 
-        fs.writeFile(JSON.stringify(writeData, null, 2), this.filePath)
+        fs.writeFile(JSON.stringify(writeData), this.filePath)
           .then(() => {
             return newRecord;
           })
@@ -50,7 +50,7 @@ class JsonDbSystem {
       .then((data) => {
         data[id] = updatedRecord;
         return fs
-          .writeFile(JSON.stringify(data, null, 2), this.filePath)
+          .writeFile(JSON.stringify(data), this.filePath)
           .catch((err) => {
             throw err;
           })
@@ -69,7 +69,7 @@ class JsonDbSystem {
       .then((data) => {
         const removedRecord = data.splice(id, 1);
 
-        fs.writeFile(JSON.stringify(data, null, 2), this.filePath)
+        fs.writeFile(JSON.stringify(data), this.filePath)
           .catch((err) => {
             throw err;
           })
