@@ -58,6 +58,27 @@ class ObjectBasedTable extends JsonDbSystem {
         throw err;
       });
   }
+
+  async removeRecord(id) {
+    return fs
+      .readFile(this.filePath, "utf8")
+      .then((data) => {
+        const parsedData = JSON.parse(data);
+        const removedRecord = parsedData[id];
+        delete parsedData[id];
+
+        fs.writeFile(this.filePath, JSON.stringify(parsedData))
+          .catch((err) => {
+            throw err;
+          })
+          .then(() => {
+            return removedRecord;
+          });
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
 }
 
 module.exports = ObjectBasedTable;

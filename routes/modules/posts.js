@@ -12,6 +12,6 @@ router.get("/:id", post.getPost);
 // Update
 router.put("/:id", post.updatePost);
 // Delete
-router.delete("/", post.deletePost);
+router.delete("/:id", post.deletePost);
 
 module.exports = router;
